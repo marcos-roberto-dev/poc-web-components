@@ -1,0 +1,20 @@
+0 silly argv {
+0 silly argv   _: [ 'create' ],
+0 silly argv   lernaVersion: '9.0.0',
+0 silly argv   '$0': 'lerna',
+0 silly argv   name: 'react-library'
+0 silly argv }
+1 notice cli v9.0.0
+2 verbose packageConfigs Resolving packages based on package.json "workspaces" configuration.
+3 verbose rootPath /home/marks/projects/poc-design-system
+4 warn ENOREMOTE No git remote found, skipping repository property
+5 error Error: canceled
+5 error     at Interface.<anonymous> (/home/marks/projects/poc-design-system/node_modules/read/dist/commonjs/read.js:89:21)
+5 error     at Interface.emit (node:events:518:28)
+5 error     at [_ttyWrite] [as _ttyWrite] (node:internal/readline/interface:1132:18)
+5 error     at ReadStream.onkeypress (node:internal/readline/interface:271:20)
+5 error     at ReadStream.emit (node:events:518:28)
+5 error     at emitKeys (node:internal/readline/utils:370:14)
+5 error     at emitKeys.next (<anonymous>)
+5 error     at ReadStream.onData (node:internal/readline/emitKeypressEvents:64:36)
+5 error     at ReadStream.emit (node:events:518:28)
