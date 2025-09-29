@@ -12,7 +12,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "npm run tsc",
+    "build": "npm run clean && npm run tsc",
+    "clean": "rm -rf dist",
     "tsc": "tsc -p . --outDir ./dist"
   },
   "publishConfig": {
@@ -20,5 +21,9 @@
   },
   "dependencies": {
     "stencil-library": "*"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.5.2"
   }
 }

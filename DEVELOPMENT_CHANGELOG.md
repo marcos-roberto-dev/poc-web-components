@@ -2,6 +2,117 @@
 
 Este arquivo documenta todas as interações e modificações aceitas durante o desenvolvimento do projeto.
 
+## [29/09/2025] - Build Sequencial e Limpeza de Bibliotecas
+
+### Problema Identificado
+- **Build Order Issue**: Dependências entre bibliotecas não respeitadas
+- **TypeScript Conflicts**: Erro "Cannot write file because it would overwrite input file"
+- **Pasta Dist Suja**: Arquivos antigos causando conflitos na compilação
+
+### Solução Implementada
+
+#### 1. Build Sequencial Explícito
+- **package.json (root)**: Script de build sequencial respeitando dependências
+```json
+"build": "lerna run build --scope=stencil-library && lerna run build --scope=angular-workspace && lerna run build --scope=react-library && lerna run build --scope=vue-library"
+```
+
+#### 2. Scripts de Limpeza nas Libraries
+- **packages/react-library/package.json**: Script clean adicionado
+```json
+{
+  "scripts": {
+    "build": "npm run clean && npm run tsc",
+    "clean": "rm -rf dist",
+    "tsc": "tsc -p . --outDir ./dist"
+  }
+}
+```
+
+- **packages/vue-library/package.json**: Script clean adicionado
+```json
+{
+  "scripts": {
+    "build": "npm run clean && npm run tsc",
+    "clean": "rm -rf dist",
+    "tsc": "tsc -p . --outDir ./dist"
+  }
+}
+```
+
+#### 3. Ordem de Build Correta
+```bash
+npm run build
+# 1. stencil-library (4s) - Gera wrappers para todos os frameworks
+# 2. angular-workspace (2s) - Compila wrapper Angular
+# 3. react-library (3s) - Compila wrapper React
+# 4. vue-library (2s) - Compila wrapper Vue
+```
+
+### Resultado
+- ✅ **Build Sequencial**: Dependências respeitadas automaticamente
+- ✅ **Dist Limpo**: `rm -rf dist` elimina conflitos de sobrescrita
+- ✅ **Libraries Corretas**: Output em `dist/` como padrão npm
+- ✅ **Build Confiável**: Sem erros de overwrites ou dependências
+
+### Performance
+- **Total**: 7s para todas as 4 bibliotecas
+- **Stencil**: 4s (master library)
+- **Angular**: 2s (wrapper compilado)
+- **React**: 3s (wrapper compilado)
+- **Vue**: 2s (wrapper compilado)
+
+### Lerna Output
+```bash
+✔ angular-workspace:build (2s)
+✔ stencil-library:build (4s)
+✔ vue-library:build (2s)
+✔ react-library:build (3s)
+```
+
+## [29/09/2025] - Scripts Paralelos para Apps
+
+### Adicionado
+- **package.json (root)**: Scripts para executar apps em paralelo
+  - `npm run dev:apps` - Roda todos os apps de desenvolvimento em paralelo
+  - `npm run build:apps` - Builda todos os apps em paralelo
+  - `npm run build:all` - Builda libraries (Lerna) + apps
+  - Scripts individuais: `dev:react`, `dev:vue`, `dev:angular`, `dev:root`
+  - Scripts de build individuais: `build:react`, `build:vue`, `build:angular`, `build:root`
+
+- **npm-run-all**: Dependência para execução paralela de scripts
+  - **Motivo**: Permitir desenvolvimento simultâneo de todos os microfrontends
+
+### Arquitetura de Scripts
+```bash
+# Desenvolvimento (servidores em paralelo)
+npm run dev:apps
+# └── React (port 4173)
+# └── Vue (port 4174)
+# └── Angular (port 4200)
+# └── Root App (port 9000)
+
+# Build libraries apenas
+npm run build
+
+# Build apps apenas
+npm run build:apps
+
+# Build completo (libraries + apps)
+npm run build:all
+```
+
+### Design Decision
+- **Apps FORA do workspace Lerna**: Evita conflitos de dependências entre frameworks
+- **Scripts no root**: Centraliza controle dos microfrontends
+- **Execução paralela**: Desenvolver todos os apps simultaneamente
+
+### Resultado
+- ✅ **Desenvolvimento eficiente**: Todos os apps rodando com um comando
+- ✅ **Build automatizado**: Scripts para CI/CD
+- ✅ **Isolamento**: Apps não conflitam com workspace Lerna
+- ✅ **Flexibilidade**: Scripts individuais e coletivos disponíveis
+
 ## [29/09/2025] - Renomeação para angular-library
 
 ### Modificado

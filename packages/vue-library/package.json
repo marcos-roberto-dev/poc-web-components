@@ -18,7 +18,8 @@
     }
   },
   "scripts": {
-    "build": "npm run tsc",
+    "build": "npm run clean && npm run tsc",
+    "clean": "rm -rf dist",
     "tsc": "tsc -p . --outDir ./dist"
   },
   "publishConfig": {
