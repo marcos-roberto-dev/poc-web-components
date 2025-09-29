@@ -1,0 +1,18 @@
+{
+  "name": "angular-library",
+   "private": true,
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^20.3.0",
+    "@angular/core": "^20.3.0"
+  },
+   "files": [
+    "dist",
+    "package.json"
+  ],
+  "dependencies": {
+    "tslib": "^2.3.0",
+    "stencil-library": "*"
+  },
+  "sideEffects": false
+}
