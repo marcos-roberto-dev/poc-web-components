@@ -1,19 +1,13 @@
 import { Config } from '@stencil/core';
 
-import { angularOutputTarget } from '@stencil/angular-output-target';
 import { reactOutputTarget } from '@stencil/react-output-target';
 import { vueOutputTarget } from '@stencil/vue-output-target';
+// import { angularOutputTarget } from '@stencil/angular-output-target';
 
 export const config: Config = {
   namespace: 'stencil-library',
   taskQueue: 'async',
   outputTargets: [
-     angularOutputTarget({
-      componentCorePackage: 'stencil-library',
-      outputType: 'component',
-        directivesProxyFile: '../angular-workspace/projects/angular-library/src/lib/stencil-generated/components.ts',
-      directivesArrayFile: '../angular-workspace/projects/angular-library/src/lib/stencil-generated/index.ts',
-    }),
     reactOutputTarget({
       outDir: '../react-library/src',
       hydrateModule: 'stencil-library/hydrate',
@@ -27,6 +21,15 @@ export const config: Config = {
       hydrateModule: 'stencil-library/hydrate',
       proxiesFile: '../vue-library/src/index.ts',
     }),
+    // Angular Output Target para Standalone Components (usando custom elements)
+    // angularOutputTarget({
+    //   componentCorePackage: 'stencil-library',
+    //   customElementsDir: 'components',
+    //   outputType: 'standalone',
+    //   directivesProxyFile: '../angular-workspace/projects/angular-library/src/lib/stencil-generated/components.ts',
+    //   directivesArrayFile: '../angular-workspace/projects/angular-library/src/lib/stencil-generated/index.ts',
+    //   valueAccessorConfigs: []
+    // }),
     {
       type: 'dist-custom-elements',
       externalRuntime: false,

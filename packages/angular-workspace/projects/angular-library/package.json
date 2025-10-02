@@ -1,18 +1,16 @@
 {
   "name": "angular-library",
-   "private": true,
   "version": "0.0.1",
-  "peerDependencies": {
-    "@angular/common": "^20.3.0",
-    "@angular/core": "^20.3.0"
-  },
-   "files": [
-    "dist",
-    "package.json"
-  ],
+ "peerDependencies": {
+  "@angular/common": "^19.0.0",
+  "@angular/core": "^19.0.0",
+  "@angular/forms": "^19.0.0",
+  "@angular/platform-browser": "^19.0.0",
+  "@angular/router": "^19.0.0",
+  "stencil-library": "*"
+},
   "dependencies": {
-    "tslib": "^2.3.0",
-    "stencil-library": "*"
+    "tslib": "^2.3.0"
   },
-  "sideEffects": false
+  "sideEffects": true
 }

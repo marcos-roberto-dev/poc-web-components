@@ -4,10 +4,11 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgZo
 
 import { ProxyCmp } from './angular-component-lib/utils';
 
-import { Components } from 'stencil-library';
+import type { Components } from 'stencil-library/components';
 
-
+import { defineCustomElement as defineMyComponent } from 'stencil-library/components/my-component.js';
 @ProxyCmp({
+  defineCustomElementFn: defineMyComponent,
   inputs: ['first', 'last', 'middle']
 })
 @Component({
@@ -16,7 +17,6 @@ import { Components } from 'stencil-library';
   template: '<ng-content></ng-content>',
   // eslint-disable-next-line @angular-eslint/no-inputs-metadata-property
   inputs: ['first', 'last', 'middle'],
-  standalone: false
 })
 export class MyComponent {
   protected el: HTMLMyComponentElement;
